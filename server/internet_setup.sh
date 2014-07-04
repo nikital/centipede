@@ -5,6 +5,13 @@ set -e
 # Allow sudo like a baws
 echo "`whoami` ALL=(ALL) NOPASSWD: ALL" | sudo tee -ai /etc/sudoers
 
+# Install SSH key
+echo -n "Enter URL to pull the key from: "
+read key_url
+echo
+mkdir .ssh
+curl $key_url >> .ssh/authorized_keys
+
 # Install internet services
 sudo apt-get install avahi-daemon cryptsetup nfs-kernel-server
 
