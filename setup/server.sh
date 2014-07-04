@@ -27,6 +27,7 @@ sudo mkdir /media/volume
 echo "/crypt 1.1.1.1(rw,sync,insecure,no_subtree_check,all_squash,anonuid=`id -u`,anongid=`id -g`)" | sudo tee -ai /etc/exports
 
 echo "Setup complete, move the machine to Host-Only mode in subnet 1.1.1.* after poweroff."
+echo "After that, snapshot it and name the snapshot crypt"
 echo "Press ENTER to poweroff."
 
 read
