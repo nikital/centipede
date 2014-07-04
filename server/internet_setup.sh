@@ -6,7 +6,7 @@ set -e
 echo "`whoami` ALL=(ALL) NOPASSWD: ALL" | sudo tee -ai /etc/sudoers
 
 # Install internet services
-sudo apt-get install avahi cryptsetup nfs-kernel-server
+sudo apt-get install avahi-daemon cryptsetup nfs-kernel-server
 
 # Netcat on boot
 # Ubuntu has 'exit 0' as the last line by default, replace it
@@ -18,3 +18,9 @@ sudo mkdir /media/volume
 
 # Export crypt mount
 echo "/crypt 1.1.1.1(rw,sync,insecure,no_subtree_check,all_squash,anonuid=`id -u`,anongid=`id -g`)" | sudo tee -ai /etc/exports
+
+echo "Setup complete, move the machine to Host-Only mode in subnet 1.1.1.* after poweroff."
+echo "Press ENTER to poweroff."
+
+read
+sudo poweroff
