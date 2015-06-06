@@ -2,6 +2,11 @@
 
 set -e
 
+echo 'Checking required programs...'
+which sudo > /dev/null
+which curl > /dev/null
+echo 'Done.'
+
 # Allow sudo like a baws
 echo "`whoami` ALL=(ALL) NOPASSWD: ALL" | sudo tee -ai /etc/sudoers
 
@@ -9,15 +14,15 @@ echo "`whoami` ALL=(ALL) NOPASSWD: ALL" | sudo tee -ai /etc/sudoers
 echo -n "Enter URL to pull the key from: "
 read key_url
 echo
-mkdir .ssh
-curl $key_url >> .ssh/authorized_keys
+mkdir -p ~/.ssh
+curl $key_url >> ~/.ssh/authorized_keys
 
 # Install internet services
 sudo apt-get install avahi-daemon cryptsetup nfs-kernel-server
 
 # Netcat on boot
 # Ubuntu has 'exit 0' as the last line by default, replace it
-sudo sed -i "$ c echo 1 | nc 1.1.1.1 54736" /etc/rc.local
+sudo sed -i "$ c echo 1 | nc -q 0 1.1.1.1 54736" /etc/rc.local
 
 # Prepare mount points
 sudo mkdir /crypt
